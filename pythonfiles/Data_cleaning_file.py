@@ -2,7 +2,6 @@ import pandas as pd
 import requests
 from io import StringIO
 import os
-from git import Repo
 
 def download_dataset(url):
     response = requests.get(url)
@@ -20,17 +19,24 @@ def clean_dataset(input_data):
 def save_cleaned_dataset(cleaned_data, local_output_path):
     cleaned_data.to_csv(local_output_path, index=False)
 
-def push_to_github(local_repo_path, file_path, commit_message):
-    repo = Repo(local_repo_path)
-    repo.index.add([file_path])
-    repo.index.commit(commit_message)
-    repo.remote().push()
+def push_to_github(local_repo_path, local_output_path, commit_message):
+    # Change to the directory of the local GitHub repository
+    os.chdir(local_repo_path)
+
+    # Add the cleaned dataset to the Git staging area
+    os.system(f'git add {local_output_path}')
+
+    # Commit the changes
+    os.system(f'git commit -m "{commit_message}"')
+
+    # Push the changes to the GitHub repository
+    os.system('git push')
 
 if __name__ == "__main__":
     # GitHub URLs for input and local output paths
     input_url = "https://github.com/yaswanthkumarsingampalli/ADS_Project_607/raw/main/Data_sets/googleplaystore.csv"
     local_output_path = "cleaned_dataset.csv"
-    local_repo_path = "https://github.com/yaswanthkumarsingampalli/ADS_Project_607"  # Change this to your local GitHub repository path
+    local_repo_path = "/path/to/your/local/github/repository"  # Change this to your local GitHub repository path
 
     # Download the dataset from the input repository
     raw_data = download_dataset(input_url)
