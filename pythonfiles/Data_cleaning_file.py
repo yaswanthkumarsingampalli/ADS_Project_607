@@ -20,8 +20,8 @@ def clean_dataset(input_data):
 def save_cleaned_dataset(cleaned_data, local_output_path):
     cleaned_data.to_csv(local_output_path, index=False)
 
-def push_to_github(repo_path, file_path, commit_message):
-    repo = Repo(repo_path)
+def push_to_github(local_repo_path, file_path, commit_message):
+    repo = Repo(local_repo_path)
     repo.index.add([file_path])
     repo.index.commit(commit_message)
     repo.remote().push()
@@ -30,7 +30,7 @@ if __name__ == "__main__":
     # GitHub URLs for input and local output paths
     input_url = "https://github.com/yaswanthkumarsingampalli/ADS_Project_607/raw/main/Data_sets/googleplaystore.csv"
     local_output_path = "cleaned_dataset.csv"
-    github_repo_path = "/yaswanthkumarsingampalli/ADS_Project_607/raw/main/Cleand_Data_sets/repository"  # Change this to your local GitHub repository path
+    local_repo_path = "https://github.com/yaswanthkumarsingampalli/ADS_Project_607/raw/main/Data_sets/"  # Change this to your local GitHub repository path
 
     # Download the dataset from the input repository
     raw_data = download_dataset(input_url)
@@ -45,6 +45,6 @@ if __name__ == "__main__":
     save_cleaned_dataset(cleaned_dataset, local_output_path)
 
     # Push the cleaned dataset to the GitHub repository
-    push_to_github(github_repo_path, local_output_path, "Update cleaned dataset")
+    push_to_github(local_repo_path, local_output_path, "Update cleaned dataset")
 
     print("Dataset cleaning, saving, and pushing to GitHub complete.")
