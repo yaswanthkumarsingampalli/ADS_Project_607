@@ -36,12 +36,7 @@ if __name__ == "__main__":
     # GitHub URLs for input and local output paths
     input_url = "https://github.com/yaswanthkumarsingampalli/ADS_Project_607/raw/main/Data_sets/googleplaystore.csv"
     local_output_path = "cleaned_dataset.csv"
-
-    # Determine the current working directory (where the script is located)
-    script_directory = os.path.dirname(os.path.abspath(__file__))
-
-    # Construct the local repository path by joining with the script directory
-    local_repo_path = os.path.join(script_directory, "ADS_Project_607")
+    local_repo_path = "https://github.com/yaswanthkumarsingampalli/ADS_Project_607/raw/main/Data_sets"  # Change this to your local GitHub repository path
 
     # Download the dataset from the input repository
     raw_data = download_dataset(input_url)
