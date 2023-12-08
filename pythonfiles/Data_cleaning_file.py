@@ -20,6 +20,7 @@ def save_cleaned_dataset(cleaned_data, local_output_path):
     cleaned_data.to_csv(local_output_path, index=False)
 
 def push_to_github(local_repo_path, local_output_path, commit_message):
+    print(local_repo_path)
     # Change to the directory of the local GitHub repository
     os.chdir(local_repo_path)
 
@@ -31,6 +32,8 @@ def push_to_github(local_repo_path, local_output_path, commit_message):
 
     # Push the changes to the GitHub repository
     os.system('git push')
+    print('git push')
+
 
 if __name__ == "__main__":
     # GitHub URLs for input and local output paths
