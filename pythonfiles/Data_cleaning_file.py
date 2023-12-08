@@ -1,5 +1,4 @@
 import pandas as pd
-import requests
 from io import StringIO
 
 def download_dataset(url):
@@ -15,8 +14,12 @@ def clean_dataset(input_data):
     cleaned_data = input_data.dropna()
     return cleaned_data
 
-def save_cleaned_dataset(cleaned_data, output_path):
-    cleaned_data.to_csv(output_path, index=False)
+def save_cleaned_dataset(cleaned_data, output_url):
+    # Extract the directory from the output URL
+    output_directory = "/".join(output_url.split("/")[:-1])
+
+    # Save the cleaned dataset to the output repository
+    cleaned_data.to_csv(output_directory + "/cleaned_dataset.csv", index=False)
 
 if __name__ == "__main__":
     # GitHub URLs for input and output repositories
@@ -33,6 +36,6 @@ if __name__ == "__main__":
     cleaned_dataset = clean_dataset(dataset)
 
     # Save the cleaned dataset to the output repository
-    save_cleaned_dataset(cleaned_dataset, "cleaned_dataset.csv")
+    save_cleaned_dataset(cleaned_dataset, output_url)
 
     print("Dataset cleaning and saving complete.")
