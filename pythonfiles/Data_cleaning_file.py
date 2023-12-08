@@ -34,6 +34,7 @@ def push_to_github(local_repo_path, local_output_path, commit_message):
 
 if __name__ == "__main__":
     # GitHub URLs for input and local output paths
+    print("Running Data_cleaning_file.py from git hub")
     input_url = "https://github.com/yaswanthkumarsingampalli/ADS_Project_607/raw/main/Data_sets/googleplaystore.csv"
     local_output_path = "cleaned_dataset.csv"
     local_repo_path = "https://github.com/yaswanthkumarsingampalli/ADS_Project_607/raw/main/Data_sets"  # Change this to your local GitHub repository path
