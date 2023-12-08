@@ -1,5 +1,8 @@
 import pandas as pd
+import requests
 from io import StringIO
+import os
+from git import Repo
 
 def download_dataset(url):
     response = requests.get(url)
@@ -14,17 +17,20 @@ def clean_dataset(input_data):
     cleaned_data = input_data.dropna()
     return cleaned_data
 
-def save_cleaned_dataset(cleaned_data, output_url):
-    # Extract the directory from the output URL
-    output_directory = "/".join(output_url.split("/")[:-1])
+def save_cleaned_dataset(cleaned_data, local_output_path):
+    cleaned_data.to_csv(local_output_path, index=False)
 
-    # Save the cleaned dataset to the output repository
-    cleaned_data.to_csv(output_directory + "/cleaned_dataset.csv", index=False)
+def push_to_github(repo_path, file_path, commit_message):
+    repo = Repo(repo_path)
+    repo.index.add([file_path])
+    repo.index.commit(commit_message)
+    repo.remote().push()
 
 if __name__ == "__main__":
-    # GitHub URLs for input and output repositories
+    # GitHub URLs for input and local output paths
     input_url = "https://github.com/yaswanthkumarsingampalli/ADS_Project_607/raw/main/Data_sets/googleplaystore.csv"
-    output_url = "https://github.com/yaswanthkumarsingampalli/ADS_Project_607/raw/main/Cleand_Data_sets/googleplaystore.csv"
+    local_output_path = "cleaned_dataset.csv"
+    github_repo_path = "/yaswanthkumarsingampalli/ADS_Project_607/raw/main/Cleand_Data_sets/repository"  # Change this to your local GitHub repository path
 
     # Download the dataset from the input repository
     raw_data = download_dataset(input_url)
@@ -35,7 +41,10 @@ if __name__ == "__main__":
     # Clean the dataset
     cleaned_dataset = clean_dataset(dataset)
 
-    # Save the cleaned dataset to the output repository
-    save_cleaned_dataset(cleaned_dataset, output_url)
+    # Save the cleaned dataset locally
+    save_cleaned_dataset(cleaned_dataset, local_output_path)
 
-    print("Dataset cleaning and saving complete.")
+    # Push the cleaned dataset to the GitHub repository
+    push_to_github(github_repo_path, local_output_path, "Update cleaned dataset")
+
+    print("Dataset cleaning, saving, and pushing to GitHub complete.")
