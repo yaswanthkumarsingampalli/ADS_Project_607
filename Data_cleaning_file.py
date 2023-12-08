@@ -20,8 +20,8 @@ def save_cleaned_dataset(cleaned_data, output_path):
 
 if __name__ == "__main__":
     # GitHub URLs for input and output repositories
-    input_url = "https://raw.githubusercontent.com/yaswanthkumarsingampalli/ADS_Project_607/raw/main/Data_sets/googleplaystore.csv"
-    output_url = "https://raw.githubusercontent.com/yaswanthkumarsingampalli/ADS_Project_607/raw/main/Cleand_Data_sets/googleplaystore.csv"
+    input_url = "https://github.com/yaswanthkumarsingampalli/ADS_Project_607/raw/main/Data_sets/googleplaystore.csv"
+    output_url = "https://github.com/yaswanthkumarsingampalli/ADS_Project_607/raw/main/Cleand_Data_sets/googleplaystore.csv"
 
     # Download the dataset from the input repository
     raw_data = download_dataset(input_url)
